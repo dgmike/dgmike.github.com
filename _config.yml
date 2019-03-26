@@ -7,3 +7,14 @@ future: true
 jailed: false
 theme: default
 gfm_quirks: paragraph_end
+plugins:
+- jekyll-coffeescript
+- jekyll-gist
+- jekyll-github-metadata
+- jekyll-paginate
+- jekyll-relative-links
+- jekyll-optional-front-matter
+- jekyll-readme-index
+- jekyll-default-layout
+- jekyll-titles-from-headings
+- jemoji
