@@ -3,7 +3,29 @@ body {
 
   a {
     &:hover {
-      color: #ccc;
+      color: #c00;
     }
+  }
+}
+
+.to_content {
+  border: 2px solid rgba(0,0,0,0.16);
+  border-radius: 2px;
+  color: #2228af;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 6px 11px;
+  min-height: 32px;
+  text-decoration: underline;
+  text-align: center;
+  width: 106px;
+
+  &:not(:focus) {
+    clip: rect(1px,1px,1px,1px);
+    overflow: hidden;
+    position: absolute;
+    padding: 0;
   }
 }
