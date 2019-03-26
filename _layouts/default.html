@@ -13,13 +13,23 @@
 
     <nav>
       <ul>
-        <li><a href="/">dgmike</a></li>
+        <li><a href="/">Página Inicial</a></li>
       </ul>
     </nav>
+
+    <header>
+      {% if page.title == "index" %}
+        <h1>dgmike</h1>
+      {% else %}
+        <h1><a href="/">dgmike</a></h1>
+      {% endif %}
+    </header>
 
     <main id="conteudo">
       {% if page.title != "index" %}
         <h1>{{ page.title }}</h1>
+      {% else %}
+        <h1>dgmike</h1>
       {% endif %}
 
       {{ content }}
