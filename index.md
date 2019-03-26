@@ -2,4 +2,4 @@
 title: index
 ---
 
-A simple post
+A simple page from dgmike.com.br.
