@@ -10,7 +10,9 @@
     <a href="#conteudo">Ir para o conteúdo principal</a>
 
     <main id="conteudo">
-      <h1>{{ page.title }}</h1>
+      {% if page.title != "index" %}
+        <h1>{{ page.title }}</h1>
+      {% endif %}
 
       {{ content }}
     </main>
