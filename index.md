@@ -1,5 +1,5 @@
 ---
-title: This is my title
+title: index
 ---
 
 A simple post
