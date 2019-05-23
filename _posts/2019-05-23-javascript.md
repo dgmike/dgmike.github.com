@@ -1,5 +1,5 @@
 ---
-title: Javascript
+title: Javascript, uma linguagem maravilhosa!
 tags: javascript, iniciante
 ---
 
