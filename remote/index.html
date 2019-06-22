@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Controle da TV</title>
+
+	<!-- meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" -->
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+	<style>
+		body {
+			max-width: 360px;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		#buttons {
+			width: 100%;
+			max-width: 360px;
+			margin: 0 auto;
+		}
+
+		form {
+			width: 30%;
+			display: inline-block;
+			margin: 5px;
+			height: 30px;
+		}
+
+		button {
+			font-size: 15px;
+			width: 100%;
+			height: 100%;
+		}
+
+		.hide { height: 5px; }
+		.hide button { display: none; }
+
+		.blue, .yellow, .green, .red { height: 20px; overflow: hidden; }
+		.blue button, .yellow button, .green button, .red button {
+			overflow: hidden;
+			border: 0;
+			border-radius: 15px;
+		}
+
+		.tall { height: 80px; }
+
+		.blue button { background: blue;  }
+		.yellow button { background: yellow;  }
+		.green button { background: green;  }
+		.red button { background: red;  }
+
+		iframe {
+			height: 1px;
+			width: 1px;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="buttons"></div>
+	<iframe src="about:blank" frameborder="0" name="output"></iframe>
+	<p>Get the API <a href="http://jointspace.sourceforge.net/projectdata/documentation/jasonApi/1/doc/API.html" target="_blank">documentation</a>.</p>
+
+	<script>
+		const sendKeyUrl = "http://192.168.0.16:1925/1/input/key";
+
+		const keys = {
+			Teletext:       { className: '', label: 'Teletext' },
+			// AmbilightOnOff: { className: '', label: 'AmbilightOnOff' },
+			Source:         { className: '', label: 'Source' },
+			Standby:        { className: '', label: '😴️' },
+
+			RedColour:      { className: 'red',    label: '' },
+			GreenColour:    { className: 'green',  label: '' },
+			YellowColour:   { className: 'yellow', label: '' },
+			nonex:          { className: 'hide' },
+			BlueColour:     { className: 'blue',   label: '' },
+
+			none1:          { className: 'hide',    label: '' },
+			none2:          { className: 'hide',    label: '' },
+			none3:          { className: 'hide',    label: '' },
+			none4:          { className: 'hide',    label: '' },
+
+			ChannelStepDown:{ className: 'tall', label: 'CH-' },
+			CursorUp:       { className: 'tall', label: '⬆️' },
+			ChannelStepUp:  { className: 'tall', label: 'CH+' },
+
+			CursorLeft:     { className: 'tall', label: '⬅️' },
+			Confirm:        { className: 'tall', label: 'OK' },
+			CursorRight:    { className: 'tall', label: '➡️' },
+
+			Back:           { className: 'tall', label: '↩️' },
+			CursorDown:     { className: 'tall', label: '⬇️' },
+			Viewmode:       { className: 'tall', label: 'Viewmode' },
+
+			none6:          { className: 'hide',    label: '' },
+			none7:          { className: 'hide',    label: '' },
+			none8:          { className: 'hide',    label: '' },
+
+			VolumeDown:     { className: '', label: '🔈️' },
+			Mute:           { className: '', label: '🔇️' },
+			VolumeUp:       { className: '', label: '🔊️' },
+
+			WatchTV:        { className: '', label: 'WatchTV' },
+			Options:        { className: '', label: '⚙️' },
+			Info:           { className: '', label: 'ℹ️' },
+
+			Home:           { className: '', label: '🏠️' },
+			Previous:       { className: '', label: 'Previous' },
+			Next:           { className: '', label: 'Next' },
+			Adjust:         { className: '', label: 'Adjust' },
+			Find:           { className: '', label: '🔍️' },
+			Online:         { className: '', label: 'Online' },
+
+			Digit1:         { className: '', label: '1' },
+			Digit2:         { className: '', label: '2' },
+			Digit3:         { className: '', label: '3' },
+
+			Digit4:         { className: '', label: '4' },
+			Digit5:         { className: '', label: '5' },
+			Digit6:         { className: '', label: '6' },
+
+			Digit7:         { className: '', label: '7' },
+			Digit8:         { className: '', label: '8' },
+			Digit9:         { className: '', label: '9' },
+
+			Subtitle:       { className: '', label: 'Subtitle' },
+			Digit0:         { className: '', label: '0' },
+			Dot:            { className: '', label:  '.' },
+
+			noneb:          { className: 'hide',    label: '' },
+			nonec:          { className: 'hide',    label: '' },
+			noned:          { className: 'hide',    label: '' },
+
+			Rewind:         { className: '', label: '⏪️' },
+			Pause:          { className: '', label: '⏸️' },
+			PlayPause:      { className: '', label: '⏯️' },
+			FastForward:    { className: '', label: '⏩️' },
+			Stop:           { className: '', label: '⏹️' },
+			Record:         { className: '', label: '⏺️' },
+		};
+
+		const buttons = document.getElementById('buttons');
+
+		Object.keys(keys).forEach(key => {
+			const content = keys[key];
+
+			const form = document.createElement('form');
+			form.className = content.className;
+			form.target = "output" ;
+			form.action = sendKeyUrl;
+			form.method = 'POST' ;
+			form.enctype = 'text/plain';
+
+			const input = document.createElement('input');
+			input.name = `{"key":"${key}","hidden":"`;
+			input.value = '"}';
+			input.style = 'display:none';
+			form.appendChild(input);
+
+			const button = document.createElement('button');
+			button.innerHTML = content.label;
+			button.type = 'submit';
+			form.appendChild(button);
+
+			buttons.appendChild(form);
+		});
+	</script>
+</body>
+</html>
