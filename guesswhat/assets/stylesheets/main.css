@@ -1,0 +1,56 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	font-size: 17px;
+	font-family: Helvetica, sans-serif;
+	overflow: hidden;
+	height: 100vh;
+	width: 100%;
+}
+
+.animate {
+	transition: 1s;
+}
+
+.question, .answer {
+	text-align: center;
+	font-size: 5rem;
+	height: 100vh;
+	width: 100%;
+	color: #666666;
+	position: relative;
+	display: block;
+	align-items: center;
+	margin-top: 0;
+	background: transparent;
+	border: 0;
+	left: 0;
+}
+
+.question.hide {
+	margin-top: -100vh;
+}
+
+.question.opacityZero {
+	opacity: 0;
+}
+
+.question.show {
+	animation-name: fadeIn;
+	animation-duration: .5s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+	0 {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.answer.hide {
+	left: -100%;
+}
